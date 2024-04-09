@@ -1,20 +1,3 @@
-module dffre #(parameter WIDTH = 1) (
-    input wire clk,
-    input wire r,
-    input wire en,
-    input wire [WIDTH-1:0] d,
-    output reg [WIDTH-1:0] q
-);
-
-    always @(posedge clk) begin
-        if (r)
-            q <= 0;
-        else if (en)
-            q <= d;
-    end
-endmodule
-
-
 module target_gen(
     input wire clk,
     input wire reset,
@@ -44,5 +27,22 @@ dffre #(.WIDTH(32)) rng_register (
     .q(rng_state)
 );
 
-endmodule
+// Target X coordinate register
+dffre #(.WIDTH(5)) target_x_register (
+    .clk(clk),
+    .r(reset),
+    .en(result_valid),
+    .d(next_target_x),
+    .q(target_x)
+);
 
+// Target Y coordinate register
+dffre #(.WIDTH(5)) target_y_register (
+    .clk(clk),
+    .r(reset),
+    .en(result_valid),
+    .d(next_target_y),
+    .q(target_y)
+);
+
+endmodule
