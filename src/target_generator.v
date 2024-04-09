@@ -15,8 +15,8 @@ wire [4:0] next_target_x, next_target_y;
 assign next_rng_state = {rng_state[30:0], rng_state[31] ^ rng_state[21] ^ rng_state[1] ^ rng_state[0]};
 
 // Assign next target coordinates
-assign next_target_y = rng_state[0];  // Randomly 0 or 1 for X coordinate
-assign next_target_x = rng_state[4:0]; // 5 bits for Y coordinate, range 0 to 31
+assign next_target_y = rng_state[0];  // Randomly 0 or 1 for Y coordinate
+assign next_target_x = rng_state[4:0]; // 5 bits for X coordinate, range 0 to 31
 
 // PRNG state register
 dffre #(.WIDTH(32)) rng_register (
