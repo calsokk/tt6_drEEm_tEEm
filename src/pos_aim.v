@@ -10,10 +10,11 @@ module pos_aim (
 );
 
     wire [4:0] next_x_pos = left_x ? x_pos == 5'd0 ? x_pos : x_pos - 1 :
-                            right_x ? x_pos == 5'd31 ? x_pos : x_pos + 1;
+                            right_x ? x_pos == 5'd31 ? x_pos : x_pos + 1 : 
+                            x_pos;
 
     // x_pos
-    dffr #(.WIDTH(5)) (
+    dffr #(.WIDTH(5)) x_pos_reg (
         .clk(clk),
         .r(reset),
         .d(next_x_pos),
@@ -21,10 +22,11 @@ module pos_aim (
     );
 
     wire [2:0] next_aim_pos = left_aim ? aim_pos == 3'd0 ? aim_pos : aim_pos - 1 :
-                              right_aim ? aim_pos == 3'd6 ? aim_pos : aim_pos + 1;
+                              right_aim ? aim_pos == 3'd6 ? aim_pos : aim_pos + 1 : 
+                              aim_pos;
 
     // aim_pos
-    dffr #(.WIDTH(3)) (
+    dffr #(.WIDTH(3)) aim_pos_reg (
         .clk(clk),
         .r(reset),
         .d(next_aim_pos),
