@@ -1,4 +1,4 @@
-module target_gen(
+module tt_um_target_gen(
     input wire clk,
     input wire reset,
     input wire result_valid,
