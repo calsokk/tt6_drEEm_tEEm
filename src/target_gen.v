@@ -3,7 +3,8 @@ module tt_um_target_gen(
     input wire reset,
     input wire result_valid,
     output wire [4:0] target_x,
-    output wire [4:0] target_y
+    output wire [4:0] target_y,
+    input wire ena 	
 );
 
 // PRNG state and target generation logic
