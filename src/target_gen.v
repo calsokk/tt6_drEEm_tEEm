@@ -1,4 +1,5 @@
-module tt_um_target_gen(
+`include "fflib.v"
+module target_gen(
     input wire clk,
     input wire reset,
     input wire result_valid,
@@ -6,26 +7,39 @@ module tt_um_target_gen(
     output wire [4:0] target_y
 );
 
-// PRNG state and target generation logic
-reg [7:0] rng_state; // Now using an 8-bit state
+// RNG state and target generation logic
+reg [7:0] rng_state; 
 wire [7:0] next_rng_state;
 wire [4:0] next_target_x, next_target_y;
 
-// Update RNG state logic (simple 8-bit LFSR)
+always @(*) begin 
+    
+    if (result_valid) begin
+         rng_state = {next_rng_state[6:0], next_rng_state[7] ^ next_rng_state[5] ^ next_rng_state[4] ^ next_rng_state[3]};
+    end 
+    else if (reset) begin
+         rng_state = 8'b01010101; 
+    end
+    else begin 
+        rng_state = rng_state;
+    end 
+    
+    
+end
+
 // Feedback taps are at bits 7, 5, 4, and 3
-assign next_rng_state = {rng_state[6:0], rng_state[7] ^ rng_state[5] ^ rng_state[4] ^ rng_state[3]};
 
 // Assign next target coordinates
-assign next_target_y = rng_state[0];  // Randomly 0 or 1 for Y coordinate
-assign next_target_x = rng_state[4:0]; // 5 bits for X coordinate, range 0 to 31
+assign next_target_y = next_rng_state[0]+5'b11110;  // Randomly 0 or 1 for Y coordinate
+assign next_target_x = next_rng_state[4:0]; // 5 bits for X coordinate, range 0 to 31
 
-// PRNG state register
-dffre #(.WIDTH(8)) rng_register ( // Modified WIDTH to 8
+// RNG state register
+dffre #(.WIDTH(8)) rng_register ( 
     .clk(clk),
     .r(reset),
     .en(result_valid),
-    .d(next_rng_state),
-    .q(rng_state)
+    .d(rng_state),
+    .q(next_rng_state)
 );
 
 // Target X coordinate register

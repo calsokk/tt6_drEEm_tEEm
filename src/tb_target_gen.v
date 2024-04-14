@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
-
-module tb_tt_um_target_gen;
+`include "target_gen.v"
+module tb_target_gen;
 
 // Inputs to the module
 reg clk;
@@ -12,7 +12,7 @@ wire [4:0] target_x;
 wire [4:0] target_y;
 
 // Instantiate the Unit Under Test (UUT)
-tt_um_target_gen uut (
+target_gen uut (
     .clk(clk),
     .reset(reset),
     .result_valid(result_valid),
@@ -28,6 +28,8 @@ end
 
 // Test sequence
 initial begin
+    $dumpfile("target_gen.vcd");
+    $dumpvars;
     // Initialize inputs
     reset = 1;
     result_valid = 0;
@@ -45,6 +47,30 @@ initial begin
     @(posedge clk);
     result_valid = 0;
 
+    // Wait and trigger result_valid to generate next target
+    #100;
+    @(posedge clk);
+    result_valid = 1;
+    @(posedge clk);
+    result_valid = 0;
+    // Wait and trigger result_valid to generate next target
+    #100;
+    @(posedge clk);
+    result_valid = 1;
+    @(posedge clk);
+    result_valid = 0;
+    // Wait and trigger result_valid to generate next target
+    #100;
+    @(posedge clk);
+    result_valid = 1;
+    @(posedge clk);
+    result_valid = 0;
+    // Wait and trigger result_valid to generate next target
+    #100;
+    @(posedge clk);
+    result_valid = 1;
+    @(posedge clk);
+    result_valid = 0;
     // Wait and trigger result_valid to generate next target
     #100;
     @(posedge clk);
