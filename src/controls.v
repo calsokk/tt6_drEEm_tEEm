@@ -12,13 +12,13 @@ module controls(
     output reg left_aim,
     output reg right_aim,
     output reg shoot_out,
-    output reg [5:0] select
+    output reg [4:0] select
 );
 
     reg [3:0] sum;
 
-    always @(posedge clk or posedge reset) begin
-        if (reset) begin
+    always @(posedge clk) begin
+        if (reset | start_new_game) begin
             // Reset all outputs
             left_x = 1'b0;
             right_x = 1'b0;
@@ -35,6 +35,7 @@ module controls(
                 left_aim = 1'b0;
                 right_aim = 1'b0;
                 shoot_out = 1'b0;
+                select = 5'b00000;
             // only one button was pressed. Assign accordingly. 
             end else begin
                 shoot_out = shoot;
@@ -42,14 +43,14 @@ module controls(
                 right_x = move_right;
                 left_aim = aim_left;
                 right_aim = aim_right;
-            end
-            // Assign select signal
-            if (move_left | move_right) begin
-                select = 5'b10000;
-            end else if (aim_left | aim_right) begin
-                select = 5'b01000;
-            end else begin
-                select = 5'b00000;
+                // Assign select signal
+                if (move_left | move_right) begin
+                    select = 5'b10000;
+                end else if (aim_left | aim_right) begin
+                    select = 5'b01000;
+                end else begin
+                    select = 5'b00000;
+                end
             end
         end
     end
