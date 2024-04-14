@@ -32,11 +32,15 @@ async def test_pos_aim(dut):
     dut.right_x.value = 1
     await ClockCycles(dut.clk, 1)
 
+  dut.right_x.value = 0
+
   # Check x_pos decrementing from 31 -> 0
   # Also checks if x_pos does not go past 0
   for i in range(0, 33):
     dut.left_x.value = 1
     await ClockCycles(dut.clk, 1)
+
+  dut.left_x.value = 0
 
   # Check aim_pos incrementing from 0 -> 6
   # Also checks if x_pos does not go past 6
@@ -44,10 +48,14 @@ async def test_pos_aim(dut):
     dut.right_aim.value = 1
     await ClockCycles(dut.clk, 1)
 
+  dut.right_aim.value = 0
+
   # Check aim_pos incrementing from 6 -> 0
   # Also checks if x_pos does not go past 0
   for i in range(0, 8): 
     dut.left_aim.value = 1
     await ClockCycles(dut.clk, 1)
 
-  assert dut.x_pos.value == 0 and dut.aim_pos.value == 0
+  dut.left_aim.value
+
+  assert dut.x_pos.value == 0 and dut.rise.value == 1 and dut.run.value == 2 and dut.dir.value == 0
