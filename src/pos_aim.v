@@ -6,6 +6,7 @@ module pos_aim (
     input wire left_aim,
     input wire right_aim,
     output wire [4:0] x_pos,
+    output wire [2:0] aim_pos,
     output reg [4:0] run,
     output reg [4:0] rise,
     output reg dir
@@ -22,8 +23,7 @@ module pos_aim (
         .d(next_x_pos),
         .q(x_pos)
     );
-
-    wire [2:0] aim_pos;
+    
     wire [2:0] next_aim_pos = left_aim ? aim_pos == 3'd0 ? aim_pos : aim_pos - 1 :
                               right_aim ? aim_pos == 3'd6 ? aim_pos : aim_pos + 1 : 
                               aim_pos;

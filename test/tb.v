@@ -20,6 +20,7 @@ module tb ();
   reg left_aim;
   reg right_aim;
   wire [4:0] x_pos;
+  wire [2:0] aim_pos;
   wire [4:0] run;
   wire [4:0] rise;
   wire dir;
@@ -33,6 +34,7 @@ module tb ();
     .left_aim(left_aim),
     .right_aim(right_aim),
     .x_pos(x_pos),
+    .aim_pos(aim_pos),
     .run(run),
     .rise(rise),
     .dir(dir)
