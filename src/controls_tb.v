@@ -33,34 +33,57 @@ module controls_tb();
         $dumpfile("controls_tb.vcd");
         $dumpvars;
 
-        reset = 0;
+        reset = 1;
         #10;
+        reset = 0;
+        move_left = 1'b0;
+        move_right = 1'b0;
+        aim_left = 1'b0;
+        aim_right = 1'b0;
+        shoot = 1'b0;
+
 
         // Test case 1: Only move_left pressed
         move_left = 1;
-        #10;
+        #20;
         move_left = 0;
 
-        // Test case 2: Only move_right pressed
-        //move_right = 1;
-        #40;
-        //move_right = 0;
 
+        reset = 1;
+        #10;
+        reset = 0;
+        // Test case 2: Only move_right pressed
+        move_right = 1;
+        #20;
+        move_right = 0;
+
+        reset = 1;
+        #10;
+        reset = 0;
         // Test case 3: Only aim_left pressed
         aim_left = 1;
-        #10;
+        #20;
         aim_left = 0;
 
+        reset = 1;
+        #10;
+        reset = 0;
         // Test case 4: Only aim_right pressed
         aim_right = 1;
-        #10;
+        #20;
         aim_right = 0;
 
+        reset = 1;
+        #10;
+        reset = 0;
         // Test case 5: Only shoot pressed
         shoot = 1;
         #10;
         shoot = 0;
 
+        reset = 1;
+        #10;
+        reset = 0;
         // Test case 6: Multiple buttons pressed
         move_left = 1;
         move_right = 1;
